@@ -1,0 +1,22 @@
+# Python cache files
+__pycache__/
+*.py[cod]
+*.so
+
+# Django migrations
+*/migrations/
+
+# Environment variables
+.env
+
+# Database files
+*.sqlite3
+
+# VSCode settings
+.vscode/
+
+# PyCharm settings
+.idea/
+
+# MacOS
+.DS_Store

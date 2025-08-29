@@ -1,0 +1,16 @@
+{% extends "bookings/base.html" %}
+{% block title %}Book Travel{% endblock %}
+{% block content %}
+<h2>Book {{ travel_option.type }}: {{ travel_option.source }} to {{ travel_option.destination }}</h2>
+<p><strong>Date and Time:</strong> {{ travel_option.datetime|date:"M d, Y H:i" }}</p>
+<p><strong>Price per seat:</strong> ₹{{ travel_option.price }}</p>
+<p><strong>Available seats:</strong> {{ travel_option.available_seats }}</p>
+
+<form method="POST" class="mt-3">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-primary">Confirm Booking</button>
+</form>
+
+<a href="{% url 'travel_options_list' %}" class="btn btn-secondary mt-3">Back to travel options</a>
+{% endblock %}

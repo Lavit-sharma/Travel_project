@@ -1,0 +1,48 @@
+{% extends "bookings/base.html" %}
+{% block title %}Travel Options{% endblock %}
+{% block content %}
+<h2>Available Travel Options</h2>
+<form method="GET" class="row g-3 mb-3">
+    <div class="col-md-2">
+        <label>Type:</label>
+        <select name="type" class="form-select">
+            <option value="All" {% if travel_type == 'All' or not travel_type %}selected{% endif %}>All</option>
+            <option value="Flight" {% if travel_type == 'Flight' %}selected{% endif %}>Flight</option>
+            <option value="Train" {% if travel_type == 'Train' %}selected{% endif %}>Train</option>
+            <option value="Bus" {% if travel_type == 'Bus' %}selected{% endif %}>Bus</option>
+        </select>
+    </div>
+    <div class="col-md-3">
+        <label>Source:</label>
+        <input type="text" name="source" value="{{ source }}" class="form-control" placeholder="Source">
+    </div>
+    <div class="col-md-3">
+        <label>Destination:</label>
+        <input type="text" name="destination" value="{{ destination }}" class="form-control" placeholder="Destination">
+    </div>
+    <div class="col-md-2">
+        <label>Date:</label>
+        <input type="date" name="date" value="{{ date }}" class="form-control">
+    </div>
+    <div class="col-md-2 align-self-end">
+        <button type="submit" class="btn btn-primary w-100">Filter</button>
+    </div>
+</form>
+
+{% if travel_options %}
+    <ul class="list-group">
+    {% for option in travel_options %}
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+            <div>
+                <strong>{{ option.type }}</strong>: {{ option.source }} to {{ option.destination }} <br>
+                <small>{{ option.datetime|date:"M d, Y H:i" }}</small><br>
+                Price: ₹{{ option.price }} | Available Seats: {{ option.available_seats }}
+            </div>
+            <a href="{% url 'book_travel' option.travel_id %}" class="btn btn-success">Book</a>
+        </li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No travel options found.</p>
+{% endif %}
+{% endblock %}
